@@ -1,0 +1,9 @@
+//NodeModules
+@import "~bootstrap/scss/bootstrap.scss";
+
+//Style
+@import "./vars.scss";
+
+body{
+    background-color: $bg-main;
+}
