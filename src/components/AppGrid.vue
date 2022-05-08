@@ -2,7 +2,7 @@
   <section class="container">
     <app-loader v-if="loading"/>
     <div class="disk-container row row-cols-5">
-      <div class="col gy-3" v-for="(disk, index) in diskList[0]" :key="index" >
+      <div class="col gy-3" v-for="(disk, index) in diskList" :key="index" >
         <app-disk :author="disk.author" :genre="disk.genre" :poster="disk.poster" :title="disk.title" :year="disk.year"/>
       </div>
     </div>
@@ -31,7 +31,8 @@ export default {
     this.loading = true;
     setTimeout(()=>{
       axios.get('https://flynn.boolean.careers/exercises/api/array/music').then((res)=>{
-        this.diskList.push(res.data.response);
+        console.log(res);
+        this.diskList = res.data.response;
         this.loading = false;
       }).catch((error) => {
         this.loading = false;
