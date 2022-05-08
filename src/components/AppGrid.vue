@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+    <app-loader v-if="loading"/>
     <div class="disk-container row row-cols-5">
       <div class="col gy-3" v-for="(disk, index) in diskList[0]" :key="index" >
         <app-disk :author="disk.author" :genre="disk.genre" :poster="disk.poster" :title="disk.title" :year="disk.year"/>
@@ -11,26 +12,32 @@
 <script>
 
 import axios from 'axios';
+import AppLoader from './AppLoader.vue';
 import AppDisk from './AppDisk.vue';
 
 export default {
   name: 'AppGrid',
   components: {
+    AppLoader,
     AppDisk
   },
   data(){
     return {
-      diskList: []
+      diskList: [],
+      loading: false
     }
   },
   mounted() {
+    this.loading = true;
     setTimeout(()=>{
       axios.get('https://flynn.boolean.careers/exercises/api/array/music').then((res)=>{
         this.diskList.push(res.data.response);
+        this.loading = false;
       }).catch((error) => {
+        this.loading = false;
         console.log(error)
       }) 
-    },1000)
+    },2000)
   }
 }
 </script>
