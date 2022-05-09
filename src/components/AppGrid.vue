@@ -1,10 +1,12 @@
 <template>
   <section class="container">
     <app-loader v-show="loading"/>
-    <app-search @performSearch="mySearch" :diskAll="diskList" :diskGenres="genre"/>
-    <div class="disk-container row row-cols-5">
-      <div class="col gy-3" v-for="(disk, index) in filteredList" :key="index" >
-        <app-disk :author="disk.author" :genre="disk.genre" :poster="disk.poster" :title="disk.title" :year="disk.year"/>
+    <div>
+      <app-search @performSearch="mySearch" :diskGenres="genre"/>
+      <div class="disk-container row row-cols-5">
+        <div class="col gy-3" v-for="(disk, index) in filteredList" :key="index" >
+          <app-disk :author="disk.author" :genre="disk.genre" :poster="disk.poster" :title="disk.title" :year="disk.year"/>
+        </div>
       </div>
     </div>
   </section>
@@ -46,7 +48,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.loading = true;
     setTimeout(()=>{
       axios.get('https://flynn.boolean.careers/exercises/api/array/music').then((res)=>{
